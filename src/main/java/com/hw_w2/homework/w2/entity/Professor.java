@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ public class Professor {
     String title;
 
     @OneToMany(mappedBy = "professor", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Subject> subjects;
+    List<Subject> subjects = new ArrayList<>();
 
     @ManyToMany()
     @JoinTable(
@@ -29,5 +30,5 @@ public class Professor {
             joinColumns = @JoinColumn(name = "professor_id"),
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
-    List<Student> students;
+    List<Student> students = new ArrayList<>();
 }
