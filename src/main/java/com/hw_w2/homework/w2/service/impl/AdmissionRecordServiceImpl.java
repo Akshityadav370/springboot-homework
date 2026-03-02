@@ -2,9 +2,11 @@ package com.hw_w2.homework.w2.service.impl;
 
 import com.hw_w2.homework.w2.dto.admission_record.*;
 import com.hw_w2.homework.w2.entity.AdmissionRecord;
+import com.hw_w2.homework.w2.entity.Student;
 import com.hw_w2.homework.w2.exception.ResourceNotFoundException;
 import com.hw_w2.homework.w2.mapper.AdmissionRecordMapper;
 import com.hw_w2.homework.w2.repository.AdmissionRecordRepository;
+import com.hw_w2.homework.w2.repository.StudentRepository;
 import com.hw_w2.homework.w2.service.AdmissionRecordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,23 @@ import java.util.List;
 public class AdmissionRecordServiceImpl implements AdmissionRecordService {
 
     private final AdmissionRecordRepository repository;
+    private final StudentRepository studentRepository;
     private final AdmissionRecordMapper mapper;
 
     @Override
     public AdmissionRecordResponse create(AdmissionRecordRequest request) {
+
+        Student student = studentRepository.findById(request.studentId())
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(
+                                "Student not found with id: " + request.studentId()
+                        )
+                );
+
         AdmissionRecord entity = mapper.toEntity(request);
+
+        entity.setStudent(student);
+
         return mapper.toResponse(repository.save(entity));
     }
 

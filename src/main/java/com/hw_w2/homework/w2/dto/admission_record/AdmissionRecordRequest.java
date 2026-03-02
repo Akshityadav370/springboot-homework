@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public record AdmissionRecordRequest(
         LocalDate admissionDate,
-        String status
+        String status,
+        Long studentId
 ) {
 }
