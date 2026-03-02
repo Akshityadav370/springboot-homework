@@ -30,4 +30,14 @@ public class Student {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     List<Subject> subjects;
+
+    public void addSubject(Subject subject) {
+        this.subjects.add(subject);
+        subject.getStudents().add(this);
+    }
+
+    public void removeSubject(Subject subject) {
+        this.subjects.remove(subject);
+        subject.getStudents().remove(this);
+    }
 }

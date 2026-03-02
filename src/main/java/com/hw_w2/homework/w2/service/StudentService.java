@@ -16,4 +16,8 @@ public interface StudentService {
     StudentResponse update(Long id, StudentUpdateRequest request);
 
     StudentResponse delete(Long id);
+
+    void addSubject(Long studentId, Long subjectId);
+
+    void removeSubject(Long studentId, Long subjectId);
 }
