@@ -19,4 +19,8 @@ public interface ProfessorService {
     ProfessorResponse deleteProfessorById(Long id);
 
     ProfessorResponse updateProfessorById(Long id, ProfessorUpdateRequest professorRequest);
+
+    void addStudent(Long professorId, Long studentId);
+
+    void removeStudent(Long professorId, Long studentId);
 }

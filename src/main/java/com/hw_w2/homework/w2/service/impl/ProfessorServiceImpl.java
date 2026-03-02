@@ -4,9 +4,11 @@ import com.hw_w2.homework.w2.dto.professor.ProfessorRequest;
 import com.hw_w2.homework.w2.dto.professor.ProfessorResponse;
 import com.hw_w2.homework.w2.dto.professor.ProfessorUpdateRequest;
 import com.hw_w2.homework.w2.entity.Professor;
+import com.hw_w2.homework.w2.entity.Student;
 import com.hw_w2.homework.w2.exception.ResourceNotFoundException;
 import com.hw_w2.homework.w2.mapper.ProfessorMapper;
 import com.hw_w2.homework.w2.repository.ProfessorRepository;
+import com.hw_w2.homework.w2.repository.StudentRepository;
 import com.hw_w2.homework.w2.service.ProfessorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProfessorServiceImpl implements ProfessorService {
     private final ProfessorRepository professorRepository;
+    private final StudentRepository studentRepository;
     private final ProfessorMapper professorMapper;
 
     @Override
@@ -67,5 +70,23 @@ public class ProfessorServiceImpl implements ProfessorService {
         Professor updated = professorRepository.save(professor);
 
         return professorMapper.toResponse(updated);
+    }
+
+    @Override
+    public void addStudent(Long professorId, Long studentId) {
+        Professor professor = professorRepository.findById(professorId).orElseThrow();
+        Student student = studentRepository.findById(studentId).orElseThrow();
+
+        professor.addStudent(student);
+        professorRepository.save(professor);
+    }
+
+    @Override
+    public void removeStudent(Long professorId, Long studentId) {
+        Professor professor = professorRepository.findById(professorId).orElseThrow();
+        Student student = studentRepository.findById(studentId).orElseThrow();
+
+        professor.removeStudent(student);
+        professorRepository.save(professor);
     }
 }

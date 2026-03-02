@@ -70,4 +70,16 @@ public class StudentController {
                 studentService.delete(id)
         );
     }
+
+    @PostMapping("/{studentId}/enroll/{subjectId}")
+    public ResponseEntity<?> enrollStudent(@PathVariable Long studentId, @PathVariable Long subjectId) {
+        studentService.addSubject(studentId, subjectId);
+        return ResponseUtil.success("Enrolled student successfully to subject!");
+    }
+
+    @PostMapping("/{studentId}/disenroll/{subjectId}")
+    public ResponseEntity<?> disEnrollStudent(@PathVariable Long studentId, @PathVariable Long subjectId) {
+        studentService.removeSubject(studentId, subjectId);
+        return ResponseUtil.success("DisEnrolled student successfully to subject!");
+    }
 }

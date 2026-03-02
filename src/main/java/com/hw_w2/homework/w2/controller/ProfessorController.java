@@ -64,4 +64,16 @@ public class ProfessorController {
         ProfessorResponse response = professorService.updateProfessorById(id, request);
         return ResponseUtil.success(response);
     }
+
+    @PostMapping("/{professorId}/add/{studentId}")
+    public ResponseEntity<?> addStudentToProfessor(@PathVariable Long professorId, @PathVariable Long studentId) {
+        professorService.addStudent(professorId, studentId);
+        return ResponseUtil.success("Attached student successfully to professor!");
+    }
+
+    @PostMapping("/{professorId}/remove/{studentId}")
+    public ResponseEntity<?> removeStudentToProfessor(@PathVariable Long professorId, @PathVariable Long studentId) {
+        professorService.removeStudent(professorId, studentId);
+        return ResponseUtil.success("Removed student successfully to professor!");
+    }
 }

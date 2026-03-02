@@ -31,4 +31,14 @@ public class Professor {
             inverseJoinColumns = @JoinColumn(name = "subject_id")
     )
     List<Student> students = new ArrayList<>();
+
+    public void addStudent(Student student) {
+        this.students.add(student);
+        student.getProfessors().add(this);
+    }
+
+    public void removeStudent(Student student) {
+        this.students.remove(student);
+        student.getProfessors().remove(this);
+    }
 }
